@@ -21,8 +21,11 @@ rootCommand.SetHandler((year, day) =>
     {
       try
       {
+        var dayString = day.ToString().PadLeft(2, '0');
+        var inputFilePath = $"./inputs/{year}/{dayString}/input.txt";
+        var input = File.ReadAllText(inputFilePath);
+        
         var processor = ChallengeProcessorResolver.Resolve<IChallengeProcessor>(year, day);
-        var input = "";
 
         var part1Result = processor.ProcessPart1Solution(input);
         Console.WriteLine($"Solution to part 1: {part1Result}");

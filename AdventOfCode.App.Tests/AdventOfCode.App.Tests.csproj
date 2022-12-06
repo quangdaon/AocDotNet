@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -23,5 +21,12 @@
   <ItemGroup>
     <ProjectReference Include="..\AdventOfCode.App\AdventOfCode.App.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+  <None 
+     Include="..\inputs\**\input.sample.txt" 
+     CopyToOutputDirectory="PreserveNewest" 
+     LinkBase="inputs\" />
+</ItemGroup>
 
 </Project>
