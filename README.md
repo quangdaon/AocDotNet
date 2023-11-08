@@ -2,6 +2,12 @@
 
 My solutions to Advent of Code challenges.
 
+## Generator
+
+https://github.com/quangdaon/generator-aocdotnet
+
+This is a Yeoman generator to create challenge processors.
+
 ## Running Tests
 
 ```
