@@ -1,6 +1,6 @@
 # Advent of Code
 
-My solutions to Advent of Code challenges prior to 2020.
+My solutions to Advent of Code challenges.
 
 ## Running Tests
 
