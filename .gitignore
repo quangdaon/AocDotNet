@@ -8,3 +8,4 @@ input.txt
 .idea/
 
 *.user
+*.code-workspace
