@@ -8,14 +8,14 @@ public class Aoc2015Day06Processor : IChallengeProcessor
 {
     private static readonly Regex InstructionExpression = new(@"^(?<cmd>(?:\w| )+) (?<x1>\d+),(?<y1>\d+) through (?<x2>\d+),(?<y2>\d+)$");
 
-    private const int Rows = 1000;
-    private const int Columns = 1000;
-    private const string TurnOnCommand = "turn on";
-    private const string TurnOffCommand = "turn off";
-    private const string ToggleCommand = "toggle";
+    private const int ROWS = 1000;
+    private const int COLUMNS = 1000;
+    private const string TURN_ON_COMMAND = "turn on";
+    private const string TURN_OFF_COMMAND = "turn off";
+    private const string TOGGLE_COMMAND = "toggle";
 
     public static int GetOnCount(IEnumerable<int> lights) => lights.Sum();
-    private static int GetIndex(int x, int y) => x * Rows + y;
+    private static int GetIndex(int x, int y) => x * ROWS + y;
 
     public void ProcessPart1Instruction(int[] lights, string row)
     {
@@ -34,9 +34,9 @@ public class Aoc2015Day06Processor : IChallengeProcessor
                 var current = lights[GetIndex(x, y)];
                 lights[GetIndex(x, y)] = command switch
                 {
-                    TurnOnCommand => 1,
-                    TurnOffCommand => 0,
-                    ToggleCommand => -1 * current + 1,
+                    TURN_ON_COMMAND => 1,
+                    TURN_OFF_COMMAND => 0,
+                    TOGGLE_COMMAND => -1 * current + 1,
                     _ => current
                 };
             }
@@ -60,9 +60,9 @@ public class Aoc2015Day06Processor : IChallengeProcessor
                 var current = lights[GetIndex(x, y)];
                 lights[GetIndex(x, y)] = command switch
                 {
-                    TurnOnCommand => current+ 1,
-                    TurnOffCommand => Math.Max(current - 1, 0),
-                    ToggleCommand => current + 2,
+                    TURN_ON_COMMAND => current+ 1,
+                    TURN_OFF_COMMAND => Math.Max(current - 1, 0),
+                    TOGGLE_COMMAND => current + 2,
                     _ => current
                 };
             }
@@ -72,7 +72,7 @@ public class Aoc2015Day06Processor : IChallengeProcessor
     public string ProcessPart1Solution(string input)
     {
         var rows = input.Split(Environment.NewLine);
-        var lights = new int[Rows * Columns]; 
+        var lights = new int[ROWS * COLUMNS]; 
         foreach (var row in rows) ProcessPart1Instruction(lights, row);
 
         return GetOnCount(lights).ToString();
@@ -81,7 +81,7 @@ public class Aoc2015Day06Processor : IChallengeProcessor
     public string ProcessPart2Solution(string input)
     {
         var rows = input.Split(Environment.NewLine);
-        var lights = new int[Rows * Columns]; 
+        var lights = new int[ROWS * COLUMNS]; 
         foreach (var row in rows) ProcessPart2Instruction(lights, row);
 
         return GetOnCount(lights).ToString();

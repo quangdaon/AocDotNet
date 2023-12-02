@@ -16,7 +16,7 @@ public class Aoc2015Day05Processor : IChallengeProcessor
     var doublesRuleMet = false;
     var chars = input.ToCharArray();
 
-    if (_disallowedStrings.Any(str => input.Contains(str))) return false;
+    if (_disallowedStrings.Any(input.Contains)) return false;
 
     foreach(var chr in chars)
     {

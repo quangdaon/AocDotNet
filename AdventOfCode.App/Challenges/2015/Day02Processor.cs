@@ -7,7 +7,7 @@ public class Aoc2015Day02Processor : IChallengeProcessor
 {
   public int CalculateWrappingPaper(string row)
   {
-    var dimensions = row.Split('x').Select(e => int.Parse(e)).ToArray();
+    var dimensions = row.Split('x').Select(int.Parse).ToArray();
     var areas = dimensions.Select((e, d) => e * dimensions[(d + 1) % dimensions.Length]).ToArray();
     var total = areas.Min();
 
@@ -17,7 +17,7 @@ public class Aoc2015Day02Processor : IChallengeProcessor
   }
   public int CalculateRibbon(string row)
   {
-    var dimensions = row.Split('x').Select(e => int.Parse(e)).ToArray();
+    var dimensions = row.Split('x').Select(int.Parse).ToArray();
     var volume = dimensions.Aggregate(1, (x, y) => x * y);
     var sorted = dimensions.OrderBy(e => e).ToArray();
     var total = 2 * (sorted[0] + sorted[1]) + volume;

@@ -20,13 +20,13 @@ public class ChallengeProcessorResolver
   {
     if (!typeof(T).IsAssignableFrom(c) || c.IsInterface) return false;
 
-    System.Attribute[] attrs = System.Attribute.GetCustomAttributes(c);
+    var attrs = System.Attribute.GetCustomAttributes(c);
 
-    foreach (System.Attribute attr in attrs)
+    foreach (var attr in attrs)
     {
       if (attr is ChallengeProcessorAttribute)
       {
-        ChallengeProcessorAttribute a = (ChallengeProcessorAttribute)attr;
+        var a = (ChallengeProcessorAttribute)attr;
         return a.Year == year && a.Day == day;
       }
     }

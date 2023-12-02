@@ -7,8 +7,8 @@ public class Aoc2015Day01Processor : IChallengeProcessor
 {
   public string ProcessPart1Solution(string input)
   {
-    int currentValue = 0;
-    int pointer = 0;
+    var currentValue = 0;
+    var pointer = 0;
 
     while (pointer < input.Length)
     {
@@ -21,8 +21,8 @@ public class Aoc2015Day01Processor : IChallengeProcessor
 
   public string ProcessPart2Solution(string input)
   {
-    int currentValue = 0;
-    int pointer = 0;
+    var currentValue = 0;
+    var pointer = 0;
 
     while (pointer < input.Length)
     {

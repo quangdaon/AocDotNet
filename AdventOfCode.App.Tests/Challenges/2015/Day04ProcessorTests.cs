@@ -5,10 +5,10 @@ namespace AdventOfCode.App.Tests.Challenges;
 
 public class Aoc2015Day04ProcessorTest : ChallengeProcessorTests
 {
-  private readonly Aoc2015Day04Processor processor;
+  private readonly Aoc2015Day04Processor _processor;
   public Aoc2015Day04ProcessorTest() : base(2015, 4)
   {
-    processor = new Aoc2015Day04Processor();
+    _processor = new Aoc2015Day04Processor();
   }
   
   [Theory]
@@ -16,7 +16,7 @@ public class Aoc2015Day04ProcessorTest : ChallengeProcessorTests
   [InlineData("pqrstuv", "1048970")]
   public void ProcessPart1Solution_GivenSampleInputs_ReturnsProvidedResult(string input, string expected)
   {
-    var result = processor.ProcessPart1Solution(input);
+    var result = _processor.ProcessPart1Solution(input);
     Assert.Equal(expected, result);
   }
   
@@ -25,7 +25,7 @@ public class Aoc2015Day04ProcessorTest : ChallengeProcessorTests
   [InlineData("pqrstuv", "5714438")]
   public void ProcessPart2Solution_GivenSampleInputs_ReturnsProvidedResult(string input, string expected)
   {
-    var result = processor.ProcessPart2Solution(input);
+    var result = _processor.ProcessPart2Solution(input);
     Assert.Equal(expected, result);
   }
 }
