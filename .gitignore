@@ -3,6 +3,7 @@ bin/
 
 input.txt
 !input.sample.txt
+!input.sample-*.txt
 
 .vscode/
 .idea/
