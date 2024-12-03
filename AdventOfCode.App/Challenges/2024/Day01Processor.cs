@@ -8,7 +8,7 @@ public class Aoc2024Day01Processor : IChallengeProcessor
   public string ProcessPart1Solution(string input)
   {
     var rows = input.Split(Environment.NewLine);
-    var (left, right) = SplitRows(rows);
+    var (left, right) = Unzip(rows);
     var rArray = right.ToArray();
     var diffs = left.Select((val, index) => Math.Abs(rArray[index] - val));
 
@@ -18,14 +18,14 @@ public class Aoc2024Day01Processor : IChallengeProcessor
   public string ProcessPart2Solution(string input)
   {
     var rows = input.Split(Environment.NewLine);
-    var (left, right) = SplitRows(rows);
+    var (left, right) = Unzip(rows);
     var rArray = right.ToArray();
-    var scores = left.Select((val, index) => val * rArray.Count(x => x == val));
+    var scores = left.Select(val => val * rArray.Count(x => x == val));
 
     return scores.Sum().ToString();
   }
 
-  public (IEnumerable<int> left, IEnumerable<int> right) SplitRows(IEnumerable<string> inputs)
+  public (IEnumerable<int> left, IEnumerable<int> right) Unzip(IEnumerable<string> inputs)
   {
     List<int> left = [];
     List<int> right = [];
