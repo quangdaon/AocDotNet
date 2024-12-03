@@ -4,7 +4,9 @@ namespace AdventOfCode.App.Challenges;
 
 public enum Color
 {
-  Red, Blue, Green
+  Red,
+  Blue,
+  Green
 }
 
 public record Game(int Number, IEnumerable<Round> Rounds);
@@ -53,9 +55,8 @@ public class Aoc2023Day02Processor : IChallengeProcessor
 
   public int GetPower(Game game)
   {
-    
     var batches = game.Rounds.SelectMany(e => e.Batches).ToArray();
-    
+
     var maxRed = batches.Where(b => b.Color == Color.Red).Max(b => b.Count);
     var maxBlue = batches.Where(b => b.Color == Color.Blue).Max(b => b.Count);
     var maxGreen = batches.Where(b => b.Color == Color.Green).Max(b => b.Count);
@@ -68,12 +69,12 @@ public class Aoc2023Day02Processor : IChallengeProcessor
     const int maxRed = 12;
     const int maxGreen = 13;
     const int maxBlue = 14;
-    
+
     var rows = input.Split(Environment.NewLine);
     var games = rows.Select(ParseGame);
     var sum = 0;
-    
-    foreach(var game in games)
+
+    foreach (var game in games)
     {
       var batches = game.Rounds.SelectMany(e => e.Batches);
 
