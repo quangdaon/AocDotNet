@@ -3,6 +3,7 @@ const path = require('path');
 
 const inputsRoot = 'inputs';
 
+const INPUT_FILENAME = 'input.txt';
 const downloadChallengeInput = async (sessionId, year, day) => {
   const paddedDay = day.toString().padStart(2, '0');
 
@@ -16,7 +17,7 @@ const downloadChallengeInput = async (sessionId, year, day) => {
 
   const txt = await res.text();
   const destDir = path.join(inputsRoot, year.toString(), paddedDay);
-  const dest = path.resolve(destDir, 'input.txt');
+  const dest = path.resolve(destDir, INPUT_FILENAME);
 
   await fs.mkdir(destDir, { recursive: true });
   await fs.writeFile(dest, txt.replace(/\r|\n|\r\n/g, '\r\n').trim(), 'utf-8');
@@ -40,7 +41,7 @@ const getExistingInputs = async () => {
   for (const year of years) {
     const days = await fs.readdir(path.join(inputsRoot, year));
     for (const day of days) {
-      if (!await fileExists(path.join(inputsRoot, year, day, 'inputs.txt'))) {
+      if (await fileExists(path.join(inputsRoot, year, day, INPUT_FILENAME))) {
         existing.push(`${year}:${parseInt(day)}`);
       }
     }
