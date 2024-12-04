@@ -8,6 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <None Include="..\inputs\2024\02\input.sample.txt">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <LinkBase>inputs\</LinkBase>
+          <Link>inputs\2024\02\input.sample.txt</Link>
+        </None>
         <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1"/>
         <None Include="..\inputs\**\input.txt" CopyToOutputDirectory="PreserveNewest" LinkBase="inputs\"/>
     </ItemGroup>

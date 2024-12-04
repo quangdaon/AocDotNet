@@ -16,43 +16,43 @@ public class Aoc2023Day03ProcessorTest : ChallengeProcessorTests
 
   public static IEnumerable<object[]> SchematicsTestData()
   {
-    yield return new object[]
-    {
+    yield return
+    [
       "..*.876.",
       new[] { new SchematicComponent(876, 3, 4) },
       new[] { 2 }
-    };
+    ];
 
-    yield return new object[]
-    {
+    yield return
+    [
       ".54^.#.",
       new[] { new SchematicComponent(54, 2, 1) },
       new[] { 3, 5 }
-    };
+    ];
 
-    yield return new object[]
-    {
+    yield return
+    [
       ".#8391..",
       new[] { new SchematicComponent(8391, 4, 2) },
       new[] { 1 }
-    };
+    ];
 
-    yield return new object[]
-    {
+    yield return
+    [
       "........................",
       System.Array.Empty<SchematicComponent>(),
-      System.Array.Empty<int>(),
-    };
+      System.Array.Empty<int>()
+    ];
 
-    yield return new object[]
-    {
+    yield return
+    [
       "*****..............*****",
       System.Array.Empty<SchematicComponent>(),
       new[] { 0, 1, 2, 3, 4, 19, 20, 21, 22, 23 }
-    };
+    ];
 
-    yield return new object[]
-    {
+    yield return
+    [
       "..84..5*...927..45..%...",
       new[]
       {
@@ -62,7 +62,7 @@ public class Aoc2023Day03ProcessorTest : ChallengeProcessorTests
         new SchematicComponent(45, 2, 16)
       },
       new[] { 7, 20 }
-    };
+    ];
   }
 
   [Theory]
