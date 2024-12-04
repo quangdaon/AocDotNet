@@ -27,9 +27,9 @@ public class Aoc2024Day02ProcessorTest : ChallengeProcessorTests
   public void IsSafe_GivenUnsafeInput_ReturnsFalse(int[] input) => Assert.False(Aoc2024Day02Processor.IsSafe(input));
 
   [Fact]
-  public void GetPermutations_GivenInput_ReturnsPermutations()
+  public void GetAlternates_GivenInput_ReturnsPermutations()
   {
-    var permutations = Aoc2024Day02Processor.GetPermutations([1, 2, 3, 4, 5]);
+    var permutations = Aoc2024Day02Processor.GetAlternates([1, 2, 3, 4, 5]);
     Assert.Equal(permutations, [[2, 3, 4, 5], [1, 3, 4, 5], [1, 2, 4, 5], [1, 2, 3, 5], [1, 2, 3, 4]]);
   }
 
