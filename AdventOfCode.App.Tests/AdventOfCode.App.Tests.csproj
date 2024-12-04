@@ -26,6 +26,8 @@
     <ItemGroup>
         <None Include="..\inputs\**\input.sample.txt" CopyToOutputDirectory="PreserveNewest" LinkBase="inputs\"/>
         <None Include="..\inputs\**\input.sample-*.txt" CopyToOutputDirectory="PreserveNewest" LinkBase="inputs\"/>
+        <None Update="..\inputs\2024\03\input.sample-2.txt">
+          <Link>inputs\2024\03\input.sample-2.txt</Link>
+        </None>
     </ItemGroup>
-
 </Project>

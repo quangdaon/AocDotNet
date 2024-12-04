@@ -43,7 +43,6 @@ public class Aoc2024Day02ProcessorTest : ChallengeProcessorTests
     Assert.Equal("2", result);
   }
 
-
   [Fact]
   public void ProcessPart2Solution_GivenSampleInputs_ReturnsProvidedResult()
   {
