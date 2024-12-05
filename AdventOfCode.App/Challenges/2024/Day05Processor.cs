@@ -27,7 +27,7 @@ public class Aoc2024Day05Processor : IChallengeProcessor
     {
       var centerSwap = noncompliantRules.FirstOrDefault(e => e.Contains(center));
       if (centerSwap is null) return center;
-      
+
       pages[Array.IndexOf(pages, centerSwap[0])] = centerSwap[1];
       pages[Array.IndexOf(pages, centerSwap[1])] = centerSwap[0];
 
@@ -38,7 +38,7 @@ public class Aoc2024Day05Processor : IChallengeProcessor
     return center;
   }
 
-  public string ProcessPart1Solution(string input)
+  private static (int[][] ruleset, int[][] updates) GetComponents(string input)
   {
     var pieces = input.Split(Environment.NewLine + Environment.NewLine);
     var rulesRows = pieces[0].Trim().Split(Environment.NewLine);
@@ -46,6 +46,13 @@ public class Aoc2024Day05Processor : IChallengeProcessor
 
     var ruleset = rulesRows.Select(e => e.Split('|').Select(int.Parse).ToArray()).ToArray();
     var updates = updatesRows.Select(e => e.Split(',').Select(int.Parse).ToArray()).ToArray();
+
+    return (ruleset, updates);
+  }
+
+  public string ProcessPart1Solution(string input)
+  {
+    var (ruleset, updates) = GetComponents(input);
 
     var compliantUpdates = updates.Where(e => IsCompliant(ruleset, e));
     var centers = compliantUpdates.Select(GetCenter);
@@ -55,12 +62,7 @@ public class Aoc2024Day05Processor : IChallengeProcessor
 
   public string ProcessPart2Solution(string input)
   {
-    var pieces = input.Split(Environment.NewLine + Environment.NewLine);
-    var rulesRows = pieces[0].Trim().Split(Environment.NewLine);
-    var updatesRows = pieces[1].Trim().Split(Environment.NewLine);
-
-    var ruleset = rulesRows.Select(e => e.Split('|').Select(int.Parse).ToArray()).ToArray();
-    var updates = updatesRows.Select(e => e.Split(',').Select(int.Parse).ToArray()).ToArray();
+    var (ruleset, updates) = GetComponents(input);
 
     var centers = updates.Select(pages => GetCompliantCenter(ruleset, pages));
 
