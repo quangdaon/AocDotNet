@@ -37,7 +37,7 @@ public class Aoc2024Day06Processor : IChallengeProcessor
     var dir = 1;
     var x = startX;
     var y = startY;
-    var mask = map.Select(e => e.Select(f => false).ToArray()).ToArray();
+    var mask = map.Select(e => e.Select(_ => false).ToArray()).ToArray();
     var next = 0;
     var steps = 0;
     var maxSteps = map.Select(e => e.Length).Sum();
