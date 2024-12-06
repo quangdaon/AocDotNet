@@ -32,15 +32,17 @@ public class Aoc2024Day06Processor : IChallengeProcessor
     return (map, startX, startY);
   }
 
-  private static bool[][] Patrol(bool[][] map, int startX, int startY)
+  private static (bool[][] mask, bool loop) Patrol(bool[][] map, int startX, int startY)
   {
     var dir = 1;
     var x = startX;
     var y = startY;
     var mask = map.Select(e => e.Select(f => false).ToArray()).ToArray();
     var next = 0;
+    var steps = 0;
+    var maxSteps = map.Select(e => e.Length).Sum();
 
-    while (next > -1)
+    while (next > -1 && steps < maxSteps)
     {
       next = dir switch
       {
@@ -62,9 +64,11 @@ public class Aoc2024Day06Processor : IChallengeProcessor
 
       dir += 1;
       if (dir > 4) dir = 1;
+
+      steps++; // Jank #1 - Checking if we're in a loop by seeing if we've walked more steps than exist on the board
     }
 
-    return mask;
+    return (mask, steps == maxSteps);
   }
 
   public static int PatrolHorizontal(int dir, bool[] maskRow, bool[] mapRow, int x)
@@ -103,21 +107,45 @@ public class Aoc2024Day06Processor : IChallengeProcessor
   {
     var (map, startX, startY) = ParseInput(input);
 
-    var mask = Patrol(map, startX, startY);
-    
+    var (mask, _) = Patrol(map, startX, startY);
+
     // PrintMap(map, mask);
 
     return mask.Sum(e => e.Count(c => c)).ToString();
   }
-  
+
   public string ProcessPart2Solution(string input)
   {
-    throw new NotImplementedException();
+    var (map, startX, startY) = ParseInput(input);
+
+    var (mask, _) = Patrol(map, startX, startY);
+
+    // Jank #2 - Check every tile along the original path
+    // Jank #3 - This is already so fucked that I am using jank to even get the tiles 
+    var stepsToCheck = mask.SelectMany((e, ir) =>
+      e.Select((c, i) => new { c, i }).Where(r => r.c).Select(x => new { x = x.i, y = ir }));
+
+    var result = 0;
+
+    foreach (var step in stepsToCheck)
+    {
+      map[step.y][step.x] = true;
+      
+      var (_, loop) = Patrol(map, startX, startY);
+
+      if (loop) result++;
+    
+      // Jank #4 - Might as well go all in and just flip the tiles in the same map grid back and forth
+      map[step.y][step.x] = false;
+    }
+    
+    return result.ToString();
   }
 
   // ReSharper disable once UnusedMember.Local
   private static void PrintMap(bool[][] map, bool[][] mask)
   {
-    foreach (var s in map.Select((m, y) => string.Join("", m.Select((n, x) => n ? '#' : mask[y][x] ? 'X' : '.')))) Console.WriteLine(s);
+    foreach (var s in map.Select((m, y) => string.Join("", m.Select((n, x) => n ? '#' : mask[y][x] ? 'X' : '.'))))
+      Console.WriteLine(s);
   }
 }

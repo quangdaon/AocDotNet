@@ -231,7 +231,7 @@ public class Aoc2024Day06ProcessorTest : ChallengeProcessorTests
 
     var result = _processor.ProcessPart2Solution(input);
 
-    Assert.Equal("???", result);
+    Assert.Equal("6", result);
   }
 
   private bool[] CreateMapRow(string row) => row.ToCharArray().Select(c => c == '1').ToArray();
