@@ -120,8 +120,6 @@ public class Aoc2024Day06Processor : IChallengeProcessor
 
     var (mask, _) = Patrol(map, startX, startY);
 
-    var start = DateTime.UtcNow;
-
     // Jank #2 - Check every tile along the original path
     // Jank #3 - This is already so bad that I am using jank to even get the tiles 
     var stepsToCheck = mask.SelectMany((e, ir) =>
@@ -140,10 +138,6 @@ public class Aoc2024Day06Processor : IChallengeProcessor
       // Jank #4 - Might as well go all in and just flip the tiles in the same map grid back and forth
       map[step.y][step.x] = false;
     }
-
-    var elapsed = DateTime.UtcNow - start;
-
-    Console.WriteLine($"Completed in {elapsed.TotalMilliseconds} ms");
 
     return result.ToString();
   }
