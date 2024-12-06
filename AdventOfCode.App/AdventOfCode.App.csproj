@@ -11,4 +11,10 @@
         <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1"/>
         <None Include="..\inputs\**\input.txt" CopyToOutputDirectory="PreserveNewest" LinkBase="inputs\"/>
     </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\inputs\2024\06\input.sample.txt">
+        <Link>inputs\2024\06\input.sample.txt</Link>
+      </Content>
+    </ItemGroup>
 </Project>
