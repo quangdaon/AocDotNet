@@ -50,7 +50,7 @@ public class Aoc2024Day06Processor : IChallengeProcessor
         2 => PatrolHorizontal(1, mask[y], map[y], x),
         3 => PatrolDown(mask, map, x, y),
         4 => PatrolHorizontal(-1, mask[y], map[y], x),
-        _ => throw new InvalidOperationException("Shit's fucked.")
+        _ => throw new InvalidOperationException("Something broke.")
       };
 
       if (dir % 2 == 0)
@@ -120,8 +120,10 @@ public class Aoc2024Day06Processor : IChallengeProcessor
 
     var (mask, _) = Patrol(map, startX, startY);
 
+    var start = DateTime.UtcNow;
+
     // Jank #2 - Check every tile along the original path
-    // Jank #3 - This is already so fucked that I am using jank to even get the tiles 
+    // Jank #3 - This is already so bad that I am using jank to even get the tiles 
     var stepsToCheck = mask.SelectMany((e, ir) =>
       e.Select((c, i) => new { c, i }).Where(r => r.c).Select(x => new { x = x.i, y = ir }));
 
@@ -130,15 +132,19 @@ public class Aoc2024Day06Processor : IChallengeProcessor
     foreach (var step in stepsToCheck)
     {
       map[step.y][step.x] = true;
-      
+
       var (_, loop) = Patrol(map, startX, startY);
 
       if (loop) result++;
-    
+
       // Jank #4 - Might as well go all in and just flip the tiles in the same map grid back and forth
       map[step.y][step.x] = false;
     }
-    
+
+    var elapsed = DateTime.UtcNow - start;
+
+    Console.WriteLine($"Completed in {elapsed.TotalMilliseconds} ms");
+
     return result.ToString();
   }
 
