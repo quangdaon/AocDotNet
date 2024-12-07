@@ -34,7 +34,7 @@ public class Aoc2024Day07Processor : IChallengeProcessor
 
   public static long Deconcatenate(long full, long operand)
   {
-    var power = Convert.ToInt64(Math.Pow(10, Math.Ceiling(Math.Log10(operand + 1))));
+    var power = Convert.ToInt64(Math.Pow(10, operand.ToString().Length));
     var concatenated = full % power == operand;
 
     return concatenated ? full / power : -1;
