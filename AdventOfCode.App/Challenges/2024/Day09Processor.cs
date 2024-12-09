@@ -25,56 +25,75 @@ public class Aoc2024Day09Processor : IChallengeProcessor
     while (idRight > 0)
     {
       var indexRight = blocks.FindLastIndex(b => b.Value == idRight);
-      var processing = blocks[indexRight];
-      Block available = (-1, -1);
 
-      int i;
+      var indexAvailable = FindAvailableIndex(fragmented, blocks, indexRight);
 
-      // i = 1 to skip the first ID=0 block
-      for (i = 1; i < indexRight; i++)
-      {
-        if (blocks[i].Value != 0 || (!fragmented && blocks[i].Size < processing.Size)) continue;
-
-        available = blocks[i];
-        break;
-      }
-
-      if (available.Value == -1)
+      if (indexAvailable == -1)
       {
         if (fragmented) break;
         idRight--;
         continue;
       }
 
-      if (available.Size >= processing.Size)
+      if (blocks[indexAvailable].Size < blocks[indexRight].Size)
       {
-        blocks[indexRight] = (0, processing.Size);
-
-        available.Size -= processing.Size;
-        blocks[i] = available;
-
-        if (available.Size <= 0) blocks.RemoveAt(i);
-
-        blocks.Insert(i, processing);
-        idRight--;
+        ShardFile(blocks, indexRight, indexAvailable);
+        continue;
       }
-      else
-      {
-        available.Value = processing.Value;
-        processing.Size -= available.Size;
 
-        blocks[i] = available;
-        blocks[indexRight] = processing;
-      }
+      MoveFile(blocks, indexRight, indexAvailable);
+
+      idRight--;
     }
 
+    TrimEmptyBlocks(blocks);
+
+    return ExpandBlocks(blocks);
+  }
+
+  private static void MoveFile(List<Block> blocks, int target, int destination)
+  {
+    var file = blocks[target];
+
+    blocks[target] = (0, file.Size);
+    blocks[destination] = (blocks[destination].Value, blocks[destination].Size - file.Size);
+
+    if (blocks[destination].Size <= 0) blocks.RemoveAt(destination);
+
+    blocks.Insert(destination, file);
+  }
+
+  private static void ShardFile(List<Block> blocks, int target, int destination)
+  {
+    blocks[destination] = (blocks[target].Value, blocks[destination].Size);
+    blocks[target] = (blocks[target].Value, blocks[target].Size - blocks[destination].Size);
+  }
+
+  private static void TrimEmptyBlocks(List<Block> blocks)
+  {
     for (var i = blocks.Count - 1; i >= 0; i--)
     {
       if (blocks[i].Value != 0) break;
       blocks.RemoveAt(i);
     }
+  }
 
-    return ExpandBlocks(blocks);
+  private static int FindAvailableIndex(bool fragmented, List<Block> blocks, int target)
+  {
+    var size = blocks[target].Size;
+    
+    // = 1 to skip the first ID=0 block
+    var indexAvailable = 1;
+
+    while (indexAvailable < target)
+    {
+      if (blocks[indexAvailable].Value == 0 && (fragmented || blocks[indexAvailable].Size >= size))
+        return indexAvailable;
+
+      indexAvailable++;
+    }
+
+    return -1;
   }
 
   public static IEnumerable<int> ToDigits(string input)
