@@ -1,4 +1,5 @@
 using AdventOfCode.App.Core;
+using AdventOfCode.App.Utilities;
 
 namespace AdventOfCode.App.Challenges;
 
@@ -10,7 +11,7 @@ public class Aoc2024Day06Processor : IChallengeProcessor
 
   public static (bool[][] map, int startX, int startY) ParseInput(string input)
   {
-    var rows = input.Split(Environment.NewLine);
+    var rows = input.ToRows();
     var map = new bool[rows.Length][];
     var startX = -1;
     var startY = -1;

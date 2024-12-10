@@ -23,7 +23,7 @@ public class Aoc2024Day09ProcessorTest : ChallengeProcessorTests
   {
     var input = ParseBlocksString(inputString);
     var result = Aoc2024Day09Processor.ExpandBlocks(input);
-    var expected = Parsing.ToDigits(expectedString);
+    var expected = expectedString.ToDigits();
 
     Assert.Equal(expected, result);
   }
@@ -47,7 +47,7 @@ public class Aoc2024Day09ProcessorTest : ChallengeProcessorTests
   public void RearrangeBlocks_GivenDiskMap_ReturnsRearrangedFilesystem(string input, string expectedString)
   {
     var result = Aoc2024Day09Processor.RearrangeBlocks(input);
-    var expected = Parsing.ToDigits(expectedString);
+    var expected = expectedString.ToDigits();
 
     Assert.Equal(expected, result);
   }
@@ -58,7 +58,7 @@ public class Aoc2024Day09ProcessorTest : ChallengeProcessorTests
   public void RearrangeBlocksWithoutFragmentation_GivenDiskMap_ReturnsRearrangedFilesystem(string input, string expectedString)
   {
     var result = Aoc2024Day09Processor.RearrangeBlocks(input, false);
-    var expected = Parsing.ToDigits(expectedString);
+    var expected = expectedString.ToDigits();
 
     Assert.Equal(string.Join("", expected), string.Join("", result));
   }

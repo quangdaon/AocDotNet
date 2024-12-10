@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AdventOfCode.App.Challenges;
+using AdventOfCode.App.Utilities;
 using Xunit;
 using Coordinates = (int x, int y);
 
@@ -64,7 +65,7 @@ public class Aoc2024Day08ProcessorTest : ChallengeProcessorTests
   {
     var input = GetSampleInput();
 
-    var result = Aoc2024Day08Processor.GetNodes(input.Split(Environment.NewLine));
+    var result = Aoc2024Day08Processor.GetNodes(input.ToRows());
 
     var expected = new Dictionary<char, Coordinates[]>
     {

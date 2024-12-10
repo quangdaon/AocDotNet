@@ -1,4 +1,5 @@
 using AdventOfCode.App.Core;
+using AdventOfCode.App.Utilities;
 
 namespace AdventOfCode.App.Challenges;
 
@@ -27,7 +28,7 @@ public class Aoc2015Day02Processor : IChallengeProcessor
 
   public string ProcessPart1Solution(string input)
   {
-    var rows = input.Split(Environment.NewLine);
+    var rows = input.ToRows();
     var sum = 0;
 
     foreach (var row in rows) sum += CalculateWrappingPaper(row);
@@ -37,7 +38,7 @@ public class Aoc2015Day02Processor : IChallengeProcessor
 
   public string ProcessPart2Solution(string input)
   {
-    var rows = input.Split(Environment.NewLine);
+    var rows = input.ToRows();
     var sum = 0;
 
     foreach (var row in rows) sum += CalculateRibbon(row);

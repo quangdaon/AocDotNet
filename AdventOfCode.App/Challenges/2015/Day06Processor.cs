@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using AdventOfCode.App.Core;
+using AdventOfCode.App.Utilities;
 
 namespace AdventOfCode.App.Challenges;
 
@@ -71,7 +72,7 @@ public class Aoc2015Day06Processor : IChallengeProcessor
 
     public string ProcessPart1Solution(string input)
     {
-        var rows = input.Split(Environment.NewLine);
+        var rows = input.ToRows();
         var lights = new int[ROWS * COLUMNS]; 
         foreach (var row in rows) ProcessPart1Instruction(lights, row);
 
@@ -80,7 +81,7 @@ public class Aoc2015Day06Processor : IChallengeProcessor
 
     public string ProcessPart2Solution(string input)
     {
-        var rows = input.Split(Environment.NewLine);
+        var rows = input.ToRows();
         var lights = new int[ROWS * COLUMNS]; 
         foreach (var row in rows) ProcessPart2Instruction(lights, row);
 

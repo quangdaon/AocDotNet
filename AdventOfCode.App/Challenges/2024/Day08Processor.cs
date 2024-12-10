@@ -1,4 +1,5 @@
 using AdventOfCode.App.Core;
+using AdventOfCode.App.Utilities;
 using Coordinates = (int x, int y);
 
 namespace AdventOfCode.App.Challenges;
@@ -83,7 +84,7 @@ public class Aoc2024Day08Processor : IChallengeProcessor
 
   public string ProcessPart1Solution(string input)
   {
-    var rows = input.Split(Environment.NewLine);
+    var rows = input.ToRows();
     var nodes = GetNodes(rows);
     var antinodes = nodes.ToDictionary(n => n.Key, n => GetAntinodes(n.Value, rows.Length, rows[0].Length));
 
@@ -94,7 +95,7 @@ public class Aoc2024Day08Processor : IChallengeProcessor
 
   public string ProcessPart2Solution(string input)
   {
-    var rows = input.Split(Environment.NewLine);
+    var rows = input.ToRows();
     var nodes = GetNodes(rows);
     var antinodes = nodes.ToDictionary(n => n.Key, n => GetAntinodes(n.Value, rows.Length, rows[0].Length, true));
 

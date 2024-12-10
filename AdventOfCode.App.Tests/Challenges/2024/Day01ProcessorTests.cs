@@ -39,7 +39,7 @@ public class Aoc2024Day01ProcessorTest : ChallengeProcessorTests
   public void Unzip_GivenValidInputs_ShouldReturnSortedArrays(string[] inputs, int[] expectedLeft,
     int[] expectedRight)
   {
-    var (left, right) = _processor.Unzip(inputs);
+    var (left, right) = Aoc2024Day01Processor.Unzip(inputs);
 
     Assert.Equal(expectedLeft, left);
     Assert.Equal(expectedRight, right);

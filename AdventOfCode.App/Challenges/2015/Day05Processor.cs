@@ -1,4 +1,5 @@
 using AdventOfCode.App.Core;
+using AdventOfCode.App.Utilities;
 
 namespace AdventOfCode.App.Challenges;
 
@@ -59,13 +60,13 @@ public class Aoc2015Day05Processor : IChallengeProcessor
   
   public string ProcessPart1Solution(string input)
   {
-    var rows = input.Split(Environment.NewLine);
+    var rows = input.ToRows();
     return rows.Count(MeetsPart1Rules).ToString();
   }
 
   public string ProcessPart2Solution(string input)
   {
-    var rows = input.Split(Environment.NewLine);
+    var rows = input.ToRows();
     return rows.Count(MeetsPart2Rules).ToString();
   }
 }

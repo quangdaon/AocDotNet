@@ -1,4 +1,5 @@
 using AdventOfCode.App.Core;
+using AdventOfCode.App.Utilities;
 
 namespace AdventOfCode.App.Challenges;
 
@@ -42,7 +43,7 @@ public class Aoc2024Day07Processor : IChallengeProcessor
 
   public string ProcessPart1Solution(string input)
   {
-    var rows = input.Split(Environment.NewLine);
+    var rows = input.ToRows();
     var expressions = rows.Select(ParseExpression);
     var result = expressions.Where(e => Evaluate(e.Result, e.Operands)).Sum(e => e.Result);
 
@@ -51,7 +52,7 @@ public class Aoc2024Day07Processor : IChallengeProcessor
 
   public string ProcessPart2Solution(string input)
   {
-    var rows = input.Split(Environment.NewLine);
+    var rows = input.ToRows();
     var expressions = rows.Select(ParseExpression);
     var result = expressions.Where(e => Evaluate(e.Result, e.Operands, true)).Sum(e => e.Result);
 

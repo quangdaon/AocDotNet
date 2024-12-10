@@ -9,7 +9,7 @@ public class Aoc2024Day09Processor : IChallengeProcessor
 {
   public static IEnumerable<Block> ParseBlocks(string input)
   {
-    var digits = Parsing.ToDigits(input);
+    var digits = input.ToDigits();
     return digits.Select((e, i) => (i % 2 != 0 ? 0 : i / 2, e)).Where(e => e != (0, 0));
   }
 

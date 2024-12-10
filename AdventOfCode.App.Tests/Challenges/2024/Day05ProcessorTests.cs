@@ -99,7 +99,7 @@ public class Aoc2024Day05ProcessorTest : ChallengeProcessorTests
 
     var result = Aoc2024Day05Processor.GetNoncompliantRules(ruleset, pages).ToArray();
 
-    Assert.Equal(1, result.Length);
+    Assert.Single(result);
     Assert.Equal(result[0], ruleset[brokenRule]);
   }
 
