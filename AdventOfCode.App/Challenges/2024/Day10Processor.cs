@@ -18,18 +18,15 @@ public class Aoc2024Day10Processor : IChallengeProcessor
 
     private Coordinates CurrentPosition { get; set; }
     private List<Coordinates> Peaks { get; } = [];
+    private List<Crawler> Subcrawlers { get; } = [];
 
-    private Crawler(int[][] grid, Coordinates startPosition)
+    private Crawler(int[][] grid, int val, Coordinates startPosition)
     {
+      _currentValue = val;
       _grid = grid;
       _height = _grid.Length;
       _width = _grid[0].Length;
       CurrentPosition = startPosition;
-    }
-
-    private Crawler(int[][] grid, int val, Coordinates startPosition) : this(grid, startPosition)
-    {
-      _currentValue = val;
     }
 
     public IEnumerable<Coordinates> Crawl()
@@ -70,15 +67,12 @@ public class Aoc2024Day10Processor : IChallengeProcessor
           return Crawl();
         default:
         {
-          var crawlers = branches.Select(e => new Crawler(_grid, next, e)).ToArray();
-          return crawlers.SelectMany(c => c.Crawl());
+          var crawlers = branches.Select(e => Spawn(_grid, next, e)).ToArray();
+          // Totally unnecessary, but feels right.
+          Subcrawlers.AddRange(crawlers);
+          return Subcrawlers.SelectMany(c => c.Crawl());
         }
       }
-    }
-
-    private static Crawler Spawn(int[][] grid, int val, int x, int y)
-    {
-      return new Crawler(grid, val, (x, y));
     }
 
     public static Crawler[] Crawl(int[][] grid)
@@ -90,6 +84,16 @@ public class Aoc2024Day10Processor : IChallengeProcessor
         .ToArray();
 
       return crawlers;
+    }
+
+    private static Crawler Spawn(int[][] grid, int next, Coordinates start)
+    {
+      return new Crawler(grid, next, start);
+    }
+
+    private static Crawler Spawn(int[][] grid, int val, int x, int y)
+    {
+      return Spawn(grid, val, (x, y));
     }
   }
 
