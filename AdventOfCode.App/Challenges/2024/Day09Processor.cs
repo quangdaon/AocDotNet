@@ -1,4 +1,5 @@
 using AdventOfCode.App.Core;
+using AdventOfCode.App.Utilities;
 using Block = (int Value, int Size);
 
 namespace AdventOfCode.App.Challenges;
@@ -8,7 +9,7 @@ public class Aoc2024Day09Processor : IChallengeProcessor
 {
   public static IEnumerable<Block> ParseBlocks(string input)
   {
-    var digits = ToDigits(input);
+    var digits = Parsing.ToDigits(input);
     return digits.Select((e, i) => (i % 2 != 0 ? 0 : i / 2, e)).Where(e => e != (0, 0));
   }
 
@@ -94,11 +95,6 @@ public class Aoc2024Day09Processor : IChallengeProcessor
     }
 
     return -1;
-  }
-
-  public static IEnumerable<int> ToDigits(string input)
-  {
-    return input.ToCharArray().Select(e => e - 48);
   }
 
   public string ProcessPart1Solution(string input)
