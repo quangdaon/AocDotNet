@@ -11,8 +11,9 @@ public class InputParsingExtensionsTests
     const string input = "40592876039";
 
     var result = input.ToDigits();
+    int[] expected = [4, 0, 5, 9, 2, 8, 7, 6, 0, 3, 9];
 
-    Assert.Equal([4, 0, 5, 9, 2, 8, 7, 6, 0, 3, 9], result);
+    Assert.Equal(expected, result);
   }
 
   [Fact]

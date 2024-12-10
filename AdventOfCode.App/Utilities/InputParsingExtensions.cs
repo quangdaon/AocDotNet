@@ -2,19 +2,19 @@
 
 public static class InputParsingExtensions
 {
-  public static IEnumerable<int> ToDigits(this string input) => input.ToCharArray().Select(e => e - 48);
+  public static int[] ToDigits(this string input) => input.ToCharArray().Select(e => e - 48).ToArray();
 
-  public static IEnumerable<IEnumerable<string>> ToGrid(this string input, string delimiterX = "",
+  public static string[][] ToGrid(this string input, string delimiterX = "",
     string delimiterY = null)
   {
     return input.ToRows(delimiterY).Select(row =>
       delimiterX == string.Empty
-        ? row.ToCharArray().Select(e => e.ToString())
-        : row.Split(delimiterX, StringSplitOptions.RemoveEmptyEntries));
+        ? row.ToCharArray().Select(e => e.ToString()).ToArray()
+        : row.Split(delimiterX, StringSplitOptions.RemoveEmptyEntries).ToArray()).ToArray();
   }
 
-  public static IEnumerable<IEnumerable<int>> ToDigitsGrid(this string input, string delimiterY = null) =>
-    input.ToRows(delimiterY).Select(ToDigits);
+  public static int[][] ToDigitsGrid(this string input, string delimiterY = null) =>
+    input.ToRows(delimiterY).Select(ToDigits).ToArray();
 
   public static string[] ToRows(this string input, string delimiterY = null)
   {
