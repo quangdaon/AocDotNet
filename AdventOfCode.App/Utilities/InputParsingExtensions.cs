@@ -3,6 +3,8 @@
 public static class InputParsingExtensions
 {
   public static int[] ToDigits(this string input) => input.ToCharArray().Select(e => e - 48).ToArray();
+  public static int[] ToInts(this string input, char delimiter = ' ') => input.Split(delimiter).Select(int.Parse).ToArray();
+  public static long[] ToLongs(this string input, char delimiter = ' ') => input.Split(delimiter).Select(long.Parse).ToArray();
 
   public static string[][] ToGrid(this string input, string delimiterX = "",
     string delimiterY = null)

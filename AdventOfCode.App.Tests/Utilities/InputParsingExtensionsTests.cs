@@ -17,6 +17,28 @@ public class InputParsingExtensionsTests
   }
 
   [Fact]
+  public void ToNumbers_GivenString_ReturnsNumbersArray()
+  {
+    const string input = "1 1 2 22 33 84";
+
+    var result = input.ToInts();
+    int[] expected = [1, 1, 2, 22, 33, 84];
+
+    Assert.Equal(expected, result);
+  }
+
+  [Fact]
+  public void ToNumbers_GivenDelimiter_ReturnsNumbersArray()
+  {
+    const string input = "54|213|67|23";
+
+    var result = input.ToInts('|');
+    int[] expected = [54, 213, 67, 23];
+
+    Assert.Equal(expected, result);
+  }
+
+  [Fact]
   public void ToGrid_GivenString_ReturnsGridEnumerable()
   {
     const string input = """
