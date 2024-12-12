@@ -8,6 +8,7 @@ namespace AdventOfCode.App.Challenges;
 public class Aoc2024Day11Processor : IChallengeProcessor
 {
   private const long RULE_THREE_SCALE = 2024;
+  private static Dictionary<(long Node, int Blinks), long> _cache = new();
 
   public static IEnumerable<long> ApplyRule(long input)
   {
@@ -39,40 +40,6 @@ public class Aoc2024Day11Processor : IChallengeProcessor
     return result;
   }
 
-  private static Dictionary<long, NodeResult> _cache = new();
-
-  private static NodeResult ProcessNode(long node)
-  {
-    if (_cache.TryGetValue(node, out var cached)) return cached;
-    
-    var next = ApplyRule(node).ToArray();
-    NodeResult result = next.Length == 1 ? ProcessNode(next[0]) : (0, next);
-
-    _cache[node] = (result.Iterations + 1, result.Branches);
-
-    return _cache[node];
-  }
-
-  public static long BlinkOptimized(long[] input, long count)
-  {
-    long result = input.Length;
-
-    foreach (var node in input)
-    {
-      var (iterations, branches) = ProcessNode(node);
-      if (iterations > count) continue;
-      if (iterations == count)
-      {
-        result++;
-        continue;
-      }
-
-      if (iterations < count) result += BlinkOptimized(branches, count - iterations) - 1;
-    }
-
-    return result;
-  }
-
   public static IEnumerable<long> Blink(long[] input, long count)
   {
     var result = input;
@@ -86,15 +53,28 @@ public class Aoc2024Day11Processor : IChallengeProcessor
     return result;
   }
 
+  private static long BlinkOptimized(long node, int blinks)
+  {
+    if (blinks == 0) return 1;
+    if (_cache.TryGetValue((node, blinks), out var cached)) return cached;
+
+    var next = ApplyRule(node).ToArray();
+    var result = next.Select(e => BlinkOptimized(e, blinks - 1)).Sum();
+
+    _cache[(node, blinks)] = result;
+
+    return result;
+  }
+
   public string ProcessPart1Solution(string input)
   {
     var stones = input.ToLongs();
-    return BlinkOptimized(stones, 25).ToString();
+    return stones.Sum(node => BlinkOptimized(node, 25)).ToString();
   }
 
   public string ProcessPart2Solution(string input)
   {
     var stones = input.ToLongs();
-    return BlinkOptimized(stones, 75).ToString();
+    return stones.Sum(node => BlinkOptimized(node, 75)).ToString();
   }
 }

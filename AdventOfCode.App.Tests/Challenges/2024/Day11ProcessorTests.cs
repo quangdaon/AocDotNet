@@ -108,13 +108,13 @@ public class Aoc2024Day11ProcessorTest : ChallengeProcessorTests
     Assert.Equal("55312", result);
   }
   
-  [Fact(Skip = "Soooooo slooooooow")]
+  [Fact]
   public void ProcessPart2Solution_GivenSampleInputs_ReturnsProvidedResult()
   {
     var input = GetSampleInput();
 
     var result = _processor.ProcessPart2Solution(input);
 
-    Assert.Equal("???", result);
+    Assert.Equal("65601038650482", result);
   }
 }
