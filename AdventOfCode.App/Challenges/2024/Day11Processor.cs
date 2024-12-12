@@ -1,5 +1,6 @@
 using AdventOfCode.App.Core;
 using AdventOfCode.App.Utilities;
+using NodeResult = (int Iterations, long[] Branches);
 
 namespace AdventOfCode.App.Challenges;
 
@@ -38,6 +39,40 @@ public class Aoc2024Day11Processor : IChallengeProcessor
     return result;
   }
 
+  private static Dictionary<long, NodeResult> _cache = new();
+
+  private static NodeResult ProcessNode(long node)
+  {
+    if (_cache.TryGetValue(node, out var cached)) return cached;
+    
+    var next = ApplyRule(node).ToArray();
+    NodeResult result = next.Length == 1 ? ProcessNode(next[0]) : (0, next);
+
+    _cache[node] = (result.Iterations + 1, result.Branches);
+
+    return _cache[node];
+  }
+
+  public static long BlinkOptimized(long[] input, long count)
+  {
+    long result = input.Length;
+
+    foreach (var node in input)
+    {
+      var (iterations, branches) = ProcessNode(node);
+      if (iterations > count) continue;
+      if (iterations == count)
+      {
+        result++;
+        continue;
+      }
+
+      if (iterations < count) result += BlinkOptimized(branches, count - iterations) - 1;
+    }
+
+    return result;
+  }
+
   public static IEnumerable<long> Blink(long[] input, long count)
   {
     var result = input;
@@ -54,12 +89,12 @@ public class Aoc2024Day11Processor : IChallengeProcessor
   public string ProcessPart1Solution(string input)
   {
     var stones = input.ToLongs();
-    return Blink(stones, 25).Count().ToString();
+    return BlinkOptimized(stones, 25).ToString();
   }
 
   public string ProcessPart2Solution(string input)
   {
     var stones = input.ToLongs();
-    return Blink(stones, 75).Count().ToString();
+    return BlinkOptimized(stones, 75).ToString();
   }
 }
