@@ -14,6 +14,11 @@ public static class InputParsingExtensions
         ? row.ToCharArray().Select(e => e.ToString()).ToArray()
         : row.Split(delimiterX, StringSplitOptions.RemoveEmptyEntries).ToArray()).ToArray();
   }
+  
+  public static char[][] ToCharGrid(this string input, string delimiterY = null)
+  {
+    return input.ToRows(delimiterY).Select(row => row.ToCharArray()).ToArray();
+  }
 
   public static int[][] ToDigitsGrid(this string input, string delimiterY = null) =>
     input.ToRows(delimiterY).Select(ToDigits).ToArray();
