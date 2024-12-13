@@ -1,6 +1,5 @@
 using AdventOfCode.App.Core;
 using AdventOfCode.App.Utilities;
-using Coordinates = (int X, int Y);
 
 namespace AdventOfCode.App.Challenges;
 

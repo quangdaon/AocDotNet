@@ -1,6 +1,5 @@
 using AdventOfCode.App.Core;
 using AdventOfCode.App.Utilities;
-using Coordinates = (int x, int y);
 
 namespace AdventOfCode.App.Challenges;
 
@@ -30,7 +29,7 @@ public class Aoc2024Day08Processor : IChallengeProcessor
 
   public static Coordinates[] GetUnboundedAntinodes(Coordinates node1, Coordinates node2, int width, int height)
   {
-    Coordinates slope = (node2.x - node1.x, node2.y - node1.y);
+    Coordinates slope = (node2.X - node1.X, node2.Y - node1.Y);
 
     List<Coordinates> antinodeCandidates = [node1, node2];
 
@@ -38,7 +37,7 @@ public class Aoc2024Day08Processor : IChallengeProcessor
 
     while (true)
     {
-      tl = (tl.x - slope.x, tl.y - slope.y);
+      tl = (tl.X - slope.X, tl.Y - slope.Y);
       if (!IsInBound(tl, width, height)) break;
 
       antinodeCandidates.Add(tl);
@@ -47,7 +46,7 @@ public class Aoc2024Day08Processor : IChallengeProcessor
     var br = node2;
     while (true)
     {
-      br = (br.x + slope.x, br.y + slope.y);
+      br = (br.X + slope.X, br.Y + slope.Y);
       if (!IsInBound(br, width, height)) break;
 
       antinodeCandidates.Add(br);
@@ -58,12 +57,12 @@ public class Aoc2024Day08Processor : IChallengeProcessor
 
   public static Coordinates[] GetAntinodes(Coordinates node1, Coordinates node2, int width, int height)
   {
-    Coordinates slope = (node2.x - node1.x, node2.y - node1.y);
+    Coordinates slope = (node2.X - node1.X, node2.Y - node1.Y);
 
     Coordinates[] antinodeCandidates =
     [
-      (node1.x - slope.x, node1.y - slope.y),
-      (node2.x + slope.x, node2.y + slope.y),
+      (node1.X - slope.X, node1.Y - slope.Y),
+      (node2.X + slope.X, node2.Y + slope.Y),
     ];
 
     return antinodeCandidates.Where(e => IsInBound(e, width, height)).ToArray();
@@ -106,6 +105,6 @@ public class Aoc2024Day08Processor : IChallengeProcessor
 
   private static bool IsInBound(Coordinates e, int width, int height)
   {
-    return e.x >= 0 && e.x < width && e.y >= 0 && e.y < height;
+    return e.X >= 0 && e.X < width && e.Y >= 0 && e.Y < height;
   }
 }
