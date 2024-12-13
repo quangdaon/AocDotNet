@@ -35,6 +35,38 @@ public class Aoc2024Day13ProcessorTest : ChallengeProcessorTests
     Assert.Equal(expectedPrizeY, result.PrizeTarget.Y);
   }
 
+  [Theory]
+  [InlineData(0, 280)]
+  [InlineData(2, 200)]
+  public void ConfigCompute_GivenPossibleConfiguration_ReturnsProvidedCost(int index, int expected)
+  {
+    var input = GetSampleInput();
+    var configs = input.Split(Environment.NewLine + Environment.NewLine);
+
+    var selected = configs[index];
+    var config = Aoc2024Day13Processor.ClawMachineConfiguration.Parse(selected);
+    
+    var result = config.ComputeCost();
+    
+    Assert.Equal(expected, result);
+  }
+
+  [Theory]
+  [InlineData(1)]
+  [InlineData(3)]
+  public void ConfigCompute_GivenImpossibleConfiguration_ReturnsZero(int index)
+  {
+    var input = GetSampleInput();
+    var configs = input.Split(Environment.NewLine + Environment.NewLine);
+
+    var selected = configs[index];
+    var config = Aoc2024Day13Processor.ClawMachineConfiguration.Parse(selected);
+    
+    var result = config.ComputeCost();
+    
+    Assert.Equal(0, result);
+  }
+
   [Fact]
   public void ProcessPart1Solution_GivenSampleInputs_ReturnsProvidedResult()
   {
@@ -42,7 +74,7 @@ public class Aoc2024Day13ProcessorTest : ChallengeProcessorTests
 
     var result = _processor.ProcessPart1Solution(input);
 
-    Assert.Equal("???", result);
+    Assert.Equal("480", result);
   }
 
   [Fact]
