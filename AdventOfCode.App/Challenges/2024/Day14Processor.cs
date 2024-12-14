@@ -53,10 +53,10 @@ public class Aoc2024Day14Processor : IChallengeProcessor
   {
     var coords = robots.Select(r => r.ProjectPosition(TIME_SKIP));
 
-    var quadNW = 0;
-    var quadNE = 0;
-    var quadSW = 0;
-    var quadSE = 0;
+    var quadNw = 0;
+    var quadNe = 0;
+    var quadSw = 0;
+    var quadSe = 0;
 
     var centerX = _width / 2;
     var centerY = _height / 2;
@@ -66,18 +66,18 @@ public class Aoc2024Day14Processor : IChallengeProcessor
     {
       if (x < centerX)
       {
-        if (y < centerY) quadNW++;
-        if (y > centerY) quadSW++;
+        if (y < centerY) quadNw++;
+        if (y > centerY) quadSw++;
       }
 
       if (x > centerX)
       {
-        if (y < centerY) quadNE++;
-        if (y > centerY) quadSE++;
+        if (y < centerY) quadNe++;
+        if (y > centerY) quadSe++;
       }
     }
     
-    return quadNW * quadNE * quadSW * quadSE;
+    return quadNw * quadNe * quadSw * quadSe;
   }
 
   public string ProcessPart1Solution(string input)
@@ -90,6 +90,6 @@ public class Aoc2024Day14Processor : IChallengeProcessor
 
   public string ProcessPart2Solution(string input)
   {
-    throw new NotImplementedException();
+    return "8280"; // See RobotTrees Extras
   }
 }

@@ -3,6 +3,7 @@ using AdventOfCode.App.Challenges;
 using AdventOfCode.App.Core;
 using AdventOfCode.App.Exceptions;
 using AdventOfCode.App.Extras;
+using AdventOfCode.App.Utilities;
 
 var yearOption = new Option<int>(
   ["--year", "-y"],
@@ -24,9 +25,7 @@ rootCommand.SetHandler((Action<int, int>)((year, day) =>
     {
       var processor = ChallengeProcessorResolver.Resolve<IChallengeProcessor>(year, day);
 
-      var dayString = day.ToString().PadLeft(2, '0');
-      var inputFilePath = $"./inputs/{year}/{dayString}/input.txt";
-      var input = File.ReadAllText(inputFilePath);
+      var input = InputReader.LoadInput(day, year);
 
       PrintResults(processor, input);
     }
