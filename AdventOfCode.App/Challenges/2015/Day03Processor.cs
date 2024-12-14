@@ -10,9 +10,9 @@ public class Aoc2015Day03Processor : IChallengeProcessor
   private const char LEFT = '<'; 
   private const char RIGHT = '>';
   
-  public string ProcessPart1Solution(string input) => CountHouses(input, new [] { (0,0) });
+  public string ProcessPart1Solution(string input) => CountHouses(input, [(0,0)]);
 
-  public string ProcessPart2Solution(string input) => CountHouses(input, new [] { (0, 0), (0,0) });
+  public string ProcessPart2Solution(string input) => CountHouses(input, [(0, 0), (0,0)]);
 
   private static string CountHouses(string input, (int X, int Y)[] coords)
   {

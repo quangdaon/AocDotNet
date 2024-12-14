@@ -6,8 +6,8 @@ namespace AdventOfCode.App.Challenges;
 [ChallengeProcessor(2015, 5)]
 public class Aoc2015Day05Processor : IChallengeProcessor
 {
-  private readonly char[] _vowels = { 'a', 'e', 'i', 'o', 'u' };
-  private readonly string[] _disallowedStrings = { "ab", "cd", "pq", "xy" };
+  private readonly char[] _vowels = ['a', 'e', 'i', 'o', 'u'];
+  private readonly string[] _disallowedStrings = ["ab", "cd", "pq", "xy"];
   
   public bool MeetsPart1Rules(string input)
   {

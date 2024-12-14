@@ -2,7 +2,7 @@ using AdventOfCode.App.Exceptions;
 
 namespace AdventOfCode.App.Core;
 
-public class ChallengeProcessorResolver
+public static class ChallengeProcessorResolver
 {
   public static T Resolve<T>(int year, int day)
   {
@@ -12,7 +12,7 @@ public class ChallengeProcessorResolver
 
     if (processorType == null) throw new UnresolvableProcessorException(year, day);
 
-    return ((T)Activator.CreateInstance(processorType));
+    return (T)Activator.CreateInstance(processorType);
   }
 
 
@@ -20,17 +20,10 @@ public class ChallengeProcessorResolver
   {
     if (!typeof(T).IsAssignableFrom(c) || c.IsInterface) return false;
 
-    var attrs = System.Attribute.GetCustomAttributes(c);
+    var attrs = Attribute.GetCustomAttributes(c);
 
-    foreach (var attr in attrs)
-    {
-      if (attr is ChallengeProcessorAttribute)
-      {
-        var a = (ChallengeProcessorAttribute)attr;
-        return a.Year == year && a.Day == day;
-      }
-    }
-
-    return false;
+    return attrs.OfType<ChallengeProcessorAttribute>()
+      .Select(a => a.Year == year && a.Day == day)
+      .FirstOrDefault();
   }
 }

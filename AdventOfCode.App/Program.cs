@@ -4,18 +4,39 @@ using AdventOfCode.App.Core;
 using AdventOfCode.App.Exceptions;
 
 var yearOption = new Option<int>(
-  new string[] { "--year", "-y" },
+  ["--year", "-y"],
   "The Advent of Code event to run."
 );
 
 var dayOption = new Option<int>(
-  new string[] { "--day", "-d" },
+  ["--day", "-d"],
   "The Advent of Code challenge to run."
 );
 
 var rootCommand = new RootCommand("Runner of Advent of Code solutions.");
 rootCommand.AddOption(yearOption);
 rootCommand.AddOption(dayOption);
+
+rootCommand.SetHandler((Action<int, int>)((year, day) =>
+    {
+      try
+      {
+        var processor = ChallengeProcessorResolver.Resolve<IChallengeProcessor>(year, day);
+
+        var dayString = day.ToString().PadLeft(2, '0');
+        var inputFilePath = $"./inputs/{year}/{dayString}/input.txt";
+        var input = File.ReadAllText(inputFilePath);
+
+        PrintResults(processor, input);
+      }
+      catch (UnresolvableProcessorException ex)
+      {
+        Console.WriteLine(ex.Message);
+      }
+    }),
+    yearOption, dayOption);
+
+return await rootCommand.InvokeAsync(args);
 
 static void PrintResults(IChallengeProcessor processor, string input)
 {
@@ -39,24 +60,3 @@ static void PrintResults(IChallengeProcessor processor, string input)
     Console.WriteLine("Part 2 has not been implemented.");
   }
 }
-
-rootCommand.SetHandler((Action<int, int>)((year, day) =>
-    {
-      try
-      {
-        var processor = ChallengeProcessorResolver.Resolve<IChallengeProcessor>(year, day);
-
-        var dayString = day.ToString().PadLeft(2, '0');
-        var inputFilePath = $"./inputs/{year}/{dayString}/input.txt";
-        var input = File.ReadAllText(inputFilePath);
-
-        PrintResults(processor, input);
-      }
-      catch (UnresolvableProcessorException ex)
-      {
-        Console.WriteLine(ex.Message);
-      }
-    }),
-    yearOption, dayOption);
-
-return await rootCommand.InvokeAsync(args);
