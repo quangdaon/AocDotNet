@@ -7,4 +7,10 @@ public class UnresolvableProcessorException : Exception
   {
     
   }
+  
+  public UnresolvableProcessorException(string id) : 
+    base($"The processor for \"{id}\" cannot be resolved.")
+  {
+    
+  }
 }

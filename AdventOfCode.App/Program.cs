@@ -2,6 +2,7 @@
 using AdventOfCode.App.Challenges;
 using AdventOfCode.App.Core;
 using AdventOfCode.App.Exceptions;
+using AdventOfCode.App.Extras;
 
 var yearOption = new Option<int>(
   ["--year", "-y"],
@@ -18,23 +19,43 @@ rootCommand.AddOption(yearOption);
 rootCommand.AddOption(dayOption);
 
 rootCommand.SetHandler((Action<int, int>)((year, day) =>
+  {
+    try
     {
-      try
-      {
-        var processor = ChallengeProcessorResolver.Resolve<IChallengeProcessor>(year, day);
+      var processor = ChallengeProcessorResolver.Resolve<IChallengeProcessor>(year, day);
 
-        var dayString = day.ToString().PadLeft(2, '0');
-        var inputFilePath = $"./inputs/{year}/{dayString}/input.txt";
-        var input = File.ReadAllText(inputFilePath);
+      var dayString = day.ToString().PadLeft(2, '0');
+      var inputFilePath = $"./inputs/{year}/{dayString}/input.txt";
+      var input = File.ReadAllText(inputFilePath);
 
-        PrintResults(processor, input);
-      }
-      catch (UnresolvableProcessorException ex)
-      {
-        Console.WriteLine(ex.Message);
-      }
-    }),
-    yearOption, dayOption);
+      PrintResults(processor, input);
+    }
+    catch (UnresolvableProcessorException ex)
+    {
+      Console.WriteLine(ex.Message);
+    }
+  }),
+  yearOption, dayOption);
+
+var idArgument = new Argument<string>("id");
+var extrasCommand = new Command("extras", "Extra processors for Advent of Code.");
+extrasCommand.AddArgument(idArgument);
+
+extrasCommand.SetHandler(async context =>
+{
+  var id = context.ParseResult.GetValueForArgument(idArgument);
+  try
+  {
+    var processor = ExtraCommandResolver.Resolve<IExtraCommand>(id);
+    await processor.Execute();
+  }
+  catch (UnresolvableProcessorException ex)
+  {
+    Console.WriteLine(ex.Message);
+  }
+});
+
+rootCommand.AddCommand(extrasCommand);
 
 return await rootCommand.InvokeAsync(args);
 
