@@ -23,27 +23,18 @@ public class Aoc2024Day13Processor : IChallengeProcessor
 
     public long ComputeCost()
     {
-      var aPresses = -1;
+      var a = PrizeTarget.X / (decimal)ButtonAOutput.X;
+      var b = -ButtonBOutput.X / (decimal)ButtonAOutput.X;
+      var c = PrizeTarget.Y / (decimal)ButtonAOutput.Y;
+      var d = -ButtonBOutput.Y / (decimal)ButtonAOutput.Y;
 
-      var remainingX = PrizeTarget.X;
+      var bPresses = Convert.ToInt64((c - a) / (b - d));
+      var aPresses = Convert.ToInt64((PrizeTarget.X - ButtonBOutput.X * bPresses) / ButtonAOutput.X);
 
-      while (remainingX > 0)
-      {
-        aPresses++;
-        remainingX = PrizeTarget.X - ButtonAOutput.X * aPresses;
+      if (aPresses * ButtonAOutput.X + bPresses * ButtonBOutput.X != PrizeTarget.X ||
+          aPresses * ButtonAOutput.Y + bPresses * ButtonBOutput.Y != PrizeTarget.Y) return 0;
 
-        if (remainingX % ButtonBOutput.X != 0) continue;
-
-        var bPresses = remainingX / ButtonBOutput.X;
-
-        if (aPresses * ButtonAOutput.Y + bPresses * ButtonBOutput.Y != PrizeTarget.Y) continue;
-
-        var cost = BUTTON_A_COST * aPresses + BUTTON_B_COST * bPresses;
-
-        return cost;
-      }
-
-      return 0;
+      return aPresses * BUTTON_A_COST + bPresses * BUTTON_B_COST;
     }
 
     private static long[] ReadRow(string row, string label, string delimiter) =>

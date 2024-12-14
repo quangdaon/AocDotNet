@@ -44,7 +44,7 @@ public class Aoc2024Day13ProcessorTest : ChallengeProcessorTests
     var configs = input.Split(Environment.NewLine + Environment.NewLine);
 
     var selected = configs[index];
-    var config = Aoc2024Day13Processor.ClawMachineConfiguration.Parse(selected);
+    var config = Aoc2024Day13Processor.ClawMachineConfiguration.Parse(selected, 10000000000);
     
     var result = config.ComputeCost();
     
@@ -60,7 +60,7 @@ public class Aoc2024Day13ProcessorTest : ChallengeProcessorTests
     var configs = input.Split(Environment.NewLine + Environment.NewLine);
 
     var selected = configs[index];
-    var config = Aoc2024Day13Processor.ClawMachineConfiguration.Parse(selected);
+    var config = Aoc2024Day13Processor.ClawMachineConfiguration.Parse(selected, 10_000_000_000_000);
     
     var result = config.ComputeCost();
     
