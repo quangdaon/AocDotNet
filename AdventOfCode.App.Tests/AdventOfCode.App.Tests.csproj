@@ -26,17 +26,5 @@
     <ItemGroup>
         <None Include="..\inputs\**\input.sample.txt" CopyToOutputDirectory="PreserveNewest" LinkBase="inputs\"/>
         <None Include="..\inputs\**\input.sample-*.txt" CopyToOutputDirectory="PreserveNewest" LinkBase="inputs\"/>
-        <None Update="..\inputs\2024\12\input.sample-3.txt">
-          <Link>inputs\2024\12\input.sample-3.txt</Link>
-          <DependentUpon>input.sample-1.txt</DependentUpon>
-        </None>
-        <None Update="..\inputs\2024\12\input.sample-4.txt">
-          <Link>inputs\2024\12\input.sample-4.txt</Link>
-          <DependentUpon>input.sample-1.txt</DependentUpon>
-        </None>
-        <None Update="..\inputs\2024\12\input.sample-5.txt">
-          <Link>inputs\2024\12\input.sample-5.txt</Link>
-          <DependentUpon>input.sample-1.txt</DependentUpon>
-        </None>
     </ItemGroup>
 </Project>
