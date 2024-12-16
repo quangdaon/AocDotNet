@@ -42,6 +42,47 @@ public class Aoc2024Day15ProcessorTest : ChallengeProcessorTests
   }
 
   [Fact]
+  public void ParseWarehouseScaled_GivenRows_ReturnsWarehouseGrid()
+  {
+    string[] rows =
+    [
+      "#####",
+      "#..O#",
+      "#.@.#",
+      "#..O#",
+      "#####"
+    ];
+
+    WarehouseTile[][] expected =
+    [
+      [
+        WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Wall,
+        WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Wall
+      ],
+      [
+        WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Empty, WarehouseTile.Empty, WarehouseTile.Empty,
+        WarehouseTile.Empty, WarehouseTile.BoxLeft, WarehouseTile.BoxRight, WarehouseTile.Wall, WarehouseTile.Wall
+      ],
+      [
+        WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Empty, WarehouseTile.Empty, WarehouseTile.Robot,
+        WarehouseTile.Empty, WarehouseTile.Empty, WarehouseTile.Empty, WarehouseTile.Wall, WarehouseTile.Wall
+      ],
+      [
+        WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Empty, WarehouseTile.Empty, WarehouseTile.Empty,
+        WarehouseTile.Empty, WarehouseTile.BoxLeft, WarehouseTile.BoxRight, WarehouseTile.Wall, WarehouseTile.Wall
+      ],
+      [
+        WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Wall,
+        WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Wall, WarehouseTile.Wall
+      ]
+    ];
+
+    var result = Aoc2024Day15Processor.ParseWarehouseScaled(rows);
+
+    Assert.Equal(expected, result);
+  }
+
+  [Fact]
   public void TryPushLeft_GivenPassableWarehouse_ShiftsLeft()
   {
     string[] initialRows =
@@ -450,6 +491,176 @@ public class Aoc2024Day15ProcessorTest : ChallengeProcessorTests
   }
 
   [Fact]
+  public void TryPushUp_GivenLargeBoxLeft_ShiftsUp()
+  {
+    string[] initialRows =
+    [
+      "#######",
+      "#.....#",
+      "#..[].#",
+      "#..@..#",
+      "#.....#",
+      "#.....#",
+      "#######"
+    ];
+
+    string[] expectedRows =
+    [
+      "#######",
+      "#..[].#",
+      "#..@..#",
+      "#.....#",
+      "#.....#",
+      "#.....#",
+      "#######"
+    ];
+
+    var expected = Aoc2024Day15Processor.ParseWarehouse(expectedRows);
+
+    var warehouse = Aoc2024Day15Processor.ParseWarehouse(initialRows);
+    var result = Aoc2024Day15Processor.TryPushY(warehouse, 3, 3, -1);
+
+    Assert.Equal(-1, result);
+    Assert.Equal(expected, warehouse);
+  }
+
+  [Fact]
+  public void TryPushUp_GivenLargeBoxRight_ShiftsUp()
+  {
+    string[] initialRows =
+    [
+      "#######",
+      "#.....#",
+      "#.[]..#",
+      "#..@..#",
+      "#.....#",
+      "#.....#",
+      "#######"
+    ];
+
+    string[] expectedRows =
+    [
+      "#######",
+      "#.[]..#",
+      "#..@..#",
+      "#.....#",
+      "#.....#",
+      "#.....#",
+      "#######"
+    ];
+
+    var expected = Aoc2024Day15Processor.ParseWarehouse(expectedRows);
+
+    var warehouse = Aoc2024Day15Processor.ParseWarehouse(initialRows);
+    var result = Aoc2024Day15Processor.TryPushY(warehouse, 3, 3, -1);
+
+    Assert.Equal(-1, result);
+    Assert.Equal(expected, warehouse);
+  }
+
+  [Fact]
+  public void TryPushUp_GivenLargeBoxes_ShiftsUp()
+  {
+    string[] initialRows =
+    [
+      "#######",
+      "#.....#",
+      "#[][].#",
+      "#.[]..#",
+      "#..@..#",
+      "#.....#",
+      "#######"
+    ];
+
+    string[] expectedRows =
+    [
+      "#######",
+      "#[][].#",
+      "#.[]..#",
+      "#..@..#",
+      "#.....#",
+      "#.....#",
+      "#######"
+    ];
+
+    var expected = Aoc2024Day15Processor.ParseWarehouse(expectedRows);
+
+    var warehouse = Aoc2024Day15Processor.ParseWarehouse(initialRows);
+    var result = Aoc2024Day15Processor.TryPushY(warehouse, 3, 4, -1);
+
+    Assert.Equal(-1, result);
+    Assert.Equal(expected, warehouse);
+  }
+
+  [Fact]
+  public void TryPushUp_GivenAdjacentLargeBoxes_ShiftsUp()
+  {
+    string[] initialRows =
+    [
+      "#######",
+      "#.....#",
+      "#[][].#",
+      "#.[]@.#",
+      "#.....#",
+      "#.....#",
+      "#######"
+    ];
+
+    string[] expectedRows =
+    [
+      "#######",
+      "#..[].#",
+      "#[].@.#",
+      "#.[]..#",
+      "#.....#",
+      "#.....#",
+      "#######"
+    ];
+
+    var expected = Aoc2024Day15Processor.ParseWarehouse(expectedRows);
+
+    var warehouse = Aoc2024Day15Processor.ParseWarehouse(initialRows);
+    var result = Aoc2024Day15Processor.TryPushY(warehouse, 4, 3, -1);
+
+    Assert.Equal(-1, result);
+    Assert.Equal(expected, warehouse);
+  }
+
+  [Fact]
+  public void TryPushUp_GivenDiagonalLargeBoxes_ShiftsUp()
+  {
+    string[] initialRows =
+    [
+      "#######",
+      "#.....#",
+      "#..[].#",
+      "#.[]..#",
+      "#..@..#",
+      "#.....#",
+      "#######"
+    ];
+
+    string[] expectedRows =
+    [
+      "#######",
+      "#..[].#",
+      "#.[]..#",
+      "#..@..#",
+      "#.....#",
+      "#.....#",
+      "#######"
+    ];
+
+    var expected = Aoc2024Day15Processor.ParseWarehouse(expectedRows);
+
+    var warehouse = Aoc2024Day15Processor.ParseWarehouse(initialRows);
+    var result = Aoc2024Day15Processor.TryPushY(warehouse, 3, 4, -1);
+
+    Assert.Equal(-1, result);
+    Assert.Equal(expected, warehouse);
+  }
+
+  [Fact]
   public void TryPushDown_GivenPassableWarehouse_ShiftsDown()
   {
     string[] initialRows =
@@ -586,13 +797,183 @@ public class Aoc2024Day15ProcessorTest : ChallengeProcessorTests
   }
 
   [Fact]
+  public void TryPushDown_GivenLargeBoxLeft_ShiftsDown()
+  {
+    string[] initialRows =
+    [
+      "#######",
+      "#.....#",
+      "#.....#",
+      "#..@..#",
+      "#..[].#",
+      "#.....#",
+      "#######"
+    ];
+
+    string[] expectedRows =
+    [
+      "#######",
+      "#.....#",
+      "#.....#",
+      "#.....#",
+      "#..@..#",
+      "#..[].#",
+      "#######"
+    ];
+
+    var expected = Aoc2024Day15Processor.ParseWarehouse(expectedRows);
+
+    var warehouse = Aoc2024Day15Processor.ParseWarehouse(initialRows);
+    var result = Aoc2024Day15Processor.TryPushY(warehouse, 3, 3, 1);
+
+    Assert.Equal(1, result);
+    Assert.Equal(expected, warehouse);
+  }
+
+  [Fact]
+  public void TryPushDown_GivenLargeBoxRight_ShiftsDown()
+  {
+    string[] initialRows =
+    [
+      "#######",
+      "#.....#",
+      "#.....#",
+      "#..@..#",
+      "#.[]..#",
+      "#.....#",
+      "#######"
+    ];
+
+    string[] expectedRows =
+    [
+      "#######",
+      "#.....#",
+      "#.....#",
+      "#.....#",
+      "#..@..#",
+      "#.[]..#",
+      "#######"
+    ];
+
+    var expected = Aoc2024Day15Processor.ParseWarehouse(expectedRows);
+
+    var warehouse = Aoc2024Day15Processor.ParseWarehouse(initialRows);
+    var result = Aoc2024Day15Processor.TryPushY(warehouse, 3, 3, 1);
+
+    Assert.Equal(1, result);
+    Assert.Equal(expected, warehouse);
+  }
+
+  [Fact]
+  public void TryPushDown_GivenLargeBoxes_ShiftsDown()
+  {
+    string[] initialRows =
+    [
+      "#######",
+      "#.....#",
+      "#..@..#",
+      "#.[]..#",
+      "#[][].#",
+      "#.....#",
+      "#######"
+    ];
+
+    string[] expectedRows =
+    [
+      "#######",
+      "#.....#",
+      "#.....#",
+      "#..@..#",
+      "#.[]..#",
+      "#[][].#",
+      "#######"
+    ];
+
+    var expected = Aoc2024Day15Processor.ParseWarehouse(expectedRows);
+
+    var warehouse = Aoc2024Day15Processor.ParseWarehouse(initialRows);
+    var result = Aoc2024Day15Processor.TryPushY(warehouse, 3, 2, 1);
+
+    Assert.Equal(1, result);
+    Assert.Equal(expected, warehouse);
+  }
+
+  [Fact]
+  public void TryPushDown_GivenAdjacentLargeBoxes_ShiftsDown()
+  {
+    string[] initialRows =
+    [
+      "#######",
+      "#.....#",
+      "#.....#",
+      "#.[]@.#",
+      "#[][].#",
+      "#.....#",
+      "#######"
+    ];
+
+    string[] expectedRows =
+    [
+      "#######",
+      "#.....#",
+      "#.....#",
+      "#.[]..#",
+      "#[].@.#",
+      "#..[].#",
+      "#######"
+    ];
+
+    var expected = Aoc2024Day15Processor.ParseWarehouse(expectedRows);
+
+    var warehouse = Aoc2024Day15Processor.ParseWarehouse(initialRows);
+    var result = Aoc2024Day15Processor.TryPushY(warehouse, 4, 3, 1);
+
+    Assert.Equal(1, result);
+    Assert.Equal(expected, warehouse);
+  }
+
+  [Fact]
+  public void TryPushDown_GivenDiagonalLargeBoxes_ShiftsDown()
+  {
+    string[] initialRows =
+    [
+      "#######",
+      "#.....#",
+      "#..@..#",
+      "#.[]..#",
+      "#..[].#",
+      "#.....#",
+      "#######"
+    ];
+
+    string[] expectedRows =
+    [
+      "#######",
+      "#.....#",
+      "#.....#",
+      "#..@..#",
+      "#.[]..#",
+      "#..[].#",
+      "#######"
+    ];
+
+    var expected = Aoc2024Day15Processor.ParseWarehouse(expectedRows);
+
+    var warehouse = Aoc2024Day15Processor.ParseWarehouse(initialRows);
+    var result = Aoc2024Day15Processor.TryPushY(warehouse, 3, 2, 1);
+
+    Assert.Equal(1, result);
+    Assert.Equal(expected, warehouse);
+  }
+
+  [Fact]
   public void ApplyInstructions_GivenSmallerSampleInputs_ReturnsProvidedResults()
   {
     var input = GetSampleInput(2);
     var components = input.Split(Environment.NewLine + Environment.NewLine);
     var warehouse = Aoc2024Day15Processor.ParseWarehouse(components[0].ToRows());
     var instructions = Aoc2024Day15Processor.ParseInstructions(components[1]);
-    
+
     string[] expectedRows =
     [
       "########",
@@ -608,7 +989,7 @@ public class Aoc2024Day15ProcessorTest : ChallengeProcessorTests
     var expected = Aoc2024Day15Processor.ParseWarehouse(expectedRows);
 
     Aoc2024Day15Processor.ApplyInstructions(warehouse, instructions);
-    
+
     Assert.Equal(expected, warehouse);
   }
 
@@ -635,9 +1016,64 @@ public class Aoc2024Day15ProcessorTest : ChallengeProcessorTests
     ];
 
     var expected = Aoc2024Day15Processor.ParseWarehouse(expectedRows);
-    
+
     Aoc2024Day15Processor.ApplyInstructions(warehouse, instructions);
-    
+
+    Assert.Equal(expected, warehouse);
+  }
+
+  [Fact]
+  public void ApplyInstructions_GivenScaledSmallerSampleInputs_ReturnsProvidedResults()
+  {
+    var input = GetSampleInput(3);
+    var components = input.Split(Environment.NewLine + Environment.NewLine);
+    var warehouse = Aoc2024Day15Processor.ParseWarehouseScaled(components[0].ToRows());
+    var instructions = Aoc2024Day15Processor.ParseInstructions(components[1]);
+
+    string[] expectedRows =
+    [
+      "##############",
+      "##...[].##..##",
+      "##...@.[]...##",
+      "##....[]....##",
+      "##..........##",
+      "##..........##",
+      "##############"
+    ];
+
+    var expected = Aoc2024Day15Processor.ParseWarehouse(expectedRows);
+
+    Aoc2024Day15Processor.ApplyInstructions(warehouse, instructions);
+
+    Assert.Equal(expected, warehouse);
+  }
+
+  [Fact]
+  public void ApplyInstructions_GivenScaledLargerSampleInputs_ReturnsProvidedResults()
+  {
+    var input = GetSampleInput(1);
+    var components = input.Split(Environment.NewLine + Environment.NewLine);
+    var warehouse = Aoc2024Day15Processor.ParseWarehouseScaled(components[0].ToRows());
+    var instructions = Aoc2024Day15Processor.ParseInstructions(components[1]);
+
+    string[] expectedRows =
+    [
+      "####################",
+      "##[].......[].[][]##",
+      "##[]...........[].##",
+      "##[]........[][][]##",
+      "##[]......[]....[]##",
+      "##..##......[]....##",
+      "##..[]............##",
+      "##..@......[].[][]##",
+      "##......[][]..[]..##",
+      "####################"
+    ];
+
+    var expected = Aoc2024Day15Processor.ParseWarehouse(expectedRows);
+
+    Aoc2024Day15Processor.ApplyInstructions(warehouse, instructions);
+
     Assert.Equal(expected, warehouse);
   }
 
@@ -656,10 +1092,10 @@ public class Aoc2024Day15ProcessorTest : ChallengeProcessorTests
   [Fact]
   public void ProcessPart2Solution_GivenSampleInputs_ReturnsProvidedResult()
   {
-    var input = GetSampleInput();
+    var input = GetSampleInput(1);
 
     var result = _processor.ProcessPart2Solution(input);
 
-    Assert.Equal("???", result);
+    Assert.Equal("9021", result);
   }
 }
