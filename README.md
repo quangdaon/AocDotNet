@@ -7,7 +7,7 @@ My solutions to Advent of Code challenges.
 After cloning the repo, create an `inputs` folder at the root of the repo. For each input you need to run, save it to `inputs/{year}/{day}/input.txt`, where year is the 4-digit `{year}` of the event and `{day}` is the 2-digit day (e.g. `inputs/2023/02`). Alternatively, log into [adventofcode.com](https://adventofcode.com/), grab your session ID from the cookies, and run:
 
 ```
-node ./index.js <session_id>
+node ./inputs.js <session_id>
 ```
 
 This downloads all of your inputs to the downloads folder.
